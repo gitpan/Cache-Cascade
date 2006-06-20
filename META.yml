@@ -1,0 +1,21 @@
+---
+name: Cache-Cascade
+version: 0.01
+author: []
+abstract: |-
+  Get/set values to/from a group of caches, with some advanced
+  semantics.
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Moose: 0.05
+  Test::use::ok: 0
+provides:
+  Cache::Cascade:
+    file: lib/Cache/Cascade.pm
+    version: 0.01
+generated_by: Module::Build version 0.2801
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

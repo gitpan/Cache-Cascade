@@ -1,0 +1,9 @@
+Build.PL
+lib/Cache/Cascade.pm
+lib/Cache/Cascade.pmc
+MANIFEST			This list of files
+t/basic.t
+t/cache_tester.t
+Makefile.PL
+META.yml
+SIGNATURE    Added here by Module::Build
