@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.54.
+signed via the Module::Signature module, version 0.55.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,17 +15,17 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 6c2e25f26332e1dd1dbff36e8b135394a5b212e1 Build.PL
-SHA1 d566da65dca6d4783301a871405e7a0a787791cd MANIFEST
-SHA1 a366101ab3fa9aa04013911ec877c8f773a78af1 META.yml
-SHA1 bd97369dd3ad3ecf22b63e73000fff89bad18f9f Makefile.PL
-SHA1 218b7ba7f3f78891afcf68ad8a0e29019d0e3902 lib/Cache/Cascade.pm
-SHA1 b9821379f4d7880f1d6112364a9178c23540a84c lib/Cache/Cascade.pmc
-SHA1 2227f732c2916d035f51df0d11f50244a0a5095c t/basic.t
+SHA1 d8ba8ec88cc981e76ebac58b13127122667f5b7c MANIFEST
+SHA1 7cd09aa6798d5e0a574080ad3ebadf936eef21f9 META.yml
+SHA1 44841ca944af6599b4dd025945ab4d401467629e Makefile.PL
+SHA1 5ca5c8c92d47f11099f5ec24ce44d9d1b24c1ac5 lib/Cache/Cascade.pm
+SHA1 1b861292783fe5b884d22f5358d0ea77e26afad2 lib/Cache/Cascade.pmc
+SHA1 3502946ed3a2a6a8e77107b32429a85f207a481b t/basic.t
 SHA1 184d7e1459be1ea00b8f138d3f9a4545ea19d931 t/cache_tester.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (Darwin)
+Version: GnuPG v1.4.7 (Darwin)
 
-iD8DBQFEl97eVCwRwOvSdBgRAucUAJ9pE5YcQGzm1m6wIJYOHkiWyIeDXwCfcBDK
-alyVEOdHTPs864+wT4GBVZE=
-=LNhg
+iD8DBQFHxvrFVCwRwOvSdBgRApTcAKCFBSDeCwOEgDxy8TqAgX89lsJjxwCfSizY
+3+X511BZztYUDqtulMbe2PY=
+=YtjI
 -----END PGP SIGNATURE-----

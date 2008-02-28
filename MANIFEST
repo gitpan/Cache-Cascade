@@ -6,4 +6,4 @@ t/basic.t
 t/cache_tester.t
 Makefile.PL
 META.yml
-SIGNATURE    Added here by Module::Build
+SIGNATURE                                Public-key signature (added by MakeMaker)

@@ -5,7 +5,7 @@ use Moose;
 
 use Carp qw/croak/;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 has caches => (
 	isa => "ArrayRef",
@@ -44,10 +44,10 @@ sub get_and_float_result {
 	my ( $self, $key, $head, @tail ) = @_;
 	$head || return;
 
-	if ( my $res = $head->get($key) ) {
+	if ( defined( my $res = $head->get($key) ) ) {
 		return $res;
 	} elsif ( @tail ) {
-		if ( my $res = $self->get_and_float_result( $key, @tail ) ) {
+		if ( defined( my $res = $self->get_and_float_result( $key, @tail ) ) ) {
 			$head->set( $key, $res );
 			return $res;
 		}
@@ -125,7 +125,7 @@ semantics.
 
 	Cache::Cascade->new(
 		caches => [
-			Cache::Memory->new(...),
+			Cache::Bounded->new(...),
 			Cache::FastMmap->new(...),
 			Cache::Memcached->new(...),
 		],
@@ -138,22 +138,22 @@ semantics.
 In a multiprocess, and especially a multiserver application caching is a very
 effective means of improving results.
 
-The tradeoff with improving the scale of the caching is in added complexity.
+The tradeoff of increasing the scale of the caching is in added complexity.
 For example, caching in a FastMmap based storage is much slower than using a
 memory based cache, because pages must be locked to ensure that no corruption
 will happen. Likewise Memcached is even more overhead than FastMmap because it
 is network bound, and uses blocking IO (on the client side).
 
-This module attempts to make a transparent cascade of caches based on several
+This module attempts to make a transparent cascade of caches using several
 backends.
 
 The idea is to search from the cheapest backend to the most expensive, and
 depending on the options also cache results in the chepear backends.
 
-The benefita of using a cascade are that if the chance of a hit is much higher
+The benefits of using a cascade are that if the chance of a hit is much higher
 in a slow cache, but checking a cheap cache is negligiable in comparison, we
-may alreayd have the result we want in the cheap cache. Configure your
-expriation policy so that there is approximately an order of magnitude better
+may already have the result we want in the cheap cache. Configure your
+expiration policy so that there is approximately an order of magnitude better
 probability of cache hits (bigger cache) for each level of the cascade.
 
 =item FIELDS
@@ -242,6 +242,12 @@ changing data then you should use a cascade.
 =head1 SEE ALSO
 
 L<Cache>
+
+=head1 VERSION CONTROL
+
+This module is maintained using Darcs. You can get the latest version from
+L<http://nothingmuch.woobling.org/Cache-Cascade/>, and use C<darcs send> to
+commit changes.
 
 =cut
 
