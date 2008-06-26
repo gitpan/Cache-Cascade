@@ -1,11 +1,19 @@
 #!/usr/bin/perl
 
 package Cache::Cascade;
-use Moose;
+use Squirrel;
 
 use Carp qw/croak/;
 
-our $VERSION = "0.03";
+sub _eval {
+	my ( $code, %args ) = @_;
+	$code =~ s/\[%\s*(\w+)\s*%\]/$args{$1} || die "$1 is not in eval" /ge;
+	eval $code;
+}
+
+use namespace::clean -except => [qw(meta)];
+
+our $VERSION = "0.04";
 
 has caches => (
 	isa => "ArrayRef",
@@ -23,6 +31,7 @@ has set_deep => (
 	is  => "rw",
 	default => 1,
 );
+
 
 sub get {
 	my ( $self, $key ) = @_;
@@ -67,8 +76,9 @@ sub set {
 }
 
 
-use tt ( methods => [qw/size count/] );
-[% FOREACH method IN methods %]
+BEGIN {
+	foreach my $method (qw(size count)) {
+		_eval <<'CODE', method => $method;
 sub [% method %] {
 	my $self = shift;
 	return $self->_sum_[% method %]( @{ $self->caches } )
@@ -79,20 +89,20 @@ sub _sum_[% method %] {
 	$head || return 0;
 	$head->[% method %] + $self->_sum_[% method %]( @tail );
 }
-[% END %]
-no tt;
+CODE
+	}
 
-use tt ( methods => [qw/remove clear set_load_callback set_validate_callback/] );
-[% FOREACH method IN methods %]
+	foreach my $method (qw(remove clear set_load_callback set_validate_callback)) {
+		_eval <<'CODE', method => $method;
 sub [% method %] {
 	my ( $self, @args ) = @_;
 	$_->[% method %]( @args ) for @{ $self->caches };
 }
-[% END %]
-no tt;
+CODE
+	}
 
-use tt ( methods => [qw/entry exists load_callback validate_callback/] );
-[% FOREACH method IN methods %]
+	foreach my $method (qw(entry exists load_callback validate_callback)) {
+		_eval <<'CODE', method => $method;
 sub [% method %] {
 	my ( $self, @args ) = @_;
 
@@ -104,9 +114,11 @@ sub [% method %] {
 
 	return;
 }
-[% END %]
-no tt;
+CODE
+	}
+}
 
+__PACKAGE__->meta->make_immutable if __PACKAGE__->meta->can("make_immutable");
 
 __PACKAGE__;
 
